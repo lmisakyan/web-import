@@ -1,40 +1,26 @@
 package com.dimimport;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-
-import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.webimport.WebSource;
-import com.webimport.webtable.Row;
-import com.webimport.webtable.Table;
-
-import static org.apache.commons.io.FileUtils.writeStringToFile;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.TimeZone;
 
 public class Test {
+    public static void main(String[] args) throws ParseException {
+        String isoDateTime = "2013-04-25T11:15:08+00:00";
+        ZonedDateTime fromIsoDate = ZonedDateTime.parse(isoDateTime);
 
-    /**
-     * @param args
-     * @throws IOException
-     * @throws MalformedURLException
-     * @throws FailingHttpStatusCodeException
-     */
-    public static void main(String[] args) throws FailingHttpStatusCodeException, MalformedURLException, IOException {
-        /*WebClient webClient = new WebClient();
-        webClient.getOptions().setJavaScriptEnabled(false);
-		HtmlPage page = webClient.getPage("http://wildsoft.ru/eng.php?l=A&id=200101022");
-		System.out.println(page.asXml());*/
-        File file = new File("D:\\tmp\\chicane.csv");
-        WebSource ws = new WebSource("http://www.chicanef1.com/list.pl?who=a&nc=0");
-        Table t = ws.getTableByTitle("Team");
+        TimeZone tz = TimeZone.getTimeZone("Europe/Moscow");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        int off = tz.getOffset(dateFormat.parse("2013-04-25T11:15:08").getTime());
+        ZoneOffset offset = ZoneOffset.ofHours(off / 1000 / 60 / 60);
 
-        for (Row r : t.rows()) {
-            for (int i = 0; i < 4; i++) {
-                writeStringToFile(file, r.getData(i) + "," + (i == 3 ? "\n" : ""), "UTF-8", true);
-            }
-        }
+        ZonedDateTime localDateTime = fromIsoDate.withZoneSameInstant(offset);
+
+        System.out.println("Input:  " + fromIsoDate);
+        System.out.println("Output: " + localDateTime.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
     }
-
 }
+

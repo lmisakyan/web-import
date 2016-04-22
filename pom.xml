@@ -11,7 +11,7 @@
         <junit.version>4.12</junit.version>
         <hamcrest.version>1.3</hamcrest.version>
         <htmlunit.version>2.19</htmlunit.version>
-        <selenium.version>2.52.0</selenium.version>
+        <selenium.version>2.44.0</selenium.version>
         <jackson.version>2.5.3</jackson.version>
     </properties>
 
@@ -32,16 +32,6 @@
             <groupId>net.sourceforge.htmlunit</groupId>
             <artifactId>htmlunit</artifactId>
             <version>${htmlunit.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${selenium.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
         </dependency>
     </dependencies>
 
