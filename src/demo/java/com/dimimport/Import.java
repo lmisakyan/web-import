@@ -1,9 +1,9 @@
 package com.dimimport;
 
+import com.webimport.WebSource;
+
 import java.io.IOException;
 import java.util.Properties;
-
-import com.webimport.WebSource;
 
 public class Import {
 
@@ -15,5 +15,4 @@ public class Import {
 			prop.load(Import.class.getClassLoader().getResourceAsStream("import.properties"));
 		return prop.getProperty(name);
 	}
-
 }
